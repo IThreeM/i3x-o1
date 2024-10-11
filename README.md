@@ -4,6 +4,11 @@ A CLI tool for building, serving, and deploying the I3M Developer Docs. **For in
 
 ## Usage
 
+- **Install**:
+  ```bash
+  cargo install i3x-o1
+  ```
+
 - **Run Developer Docs Locally**:
   ```bash
   i3x-o1 run
