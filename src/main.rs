@@ -20,16 +20,35 @@ enum Commands {
 fn main() {
     let cli = Cli::parse();
 
+    // Install mdbook before proceeding
+    install_mdbook();
+
     match &cli.command {
         Commands::Run => run_docs(),
         Commands::Deploy => deploy_to_icp(),
     }
 }
 
+fn install_mdbook() {
+    println!("Installing mdbook...");
+
+    let install_status = Command::new("cargo")
+        .arg("install")
+        .arg("mdbook")
+        .status()
+        .expect("Failed to install mdbook.");
+
+    if !install_status.success() {
+        eprintln!("Failed to install mdbook.");
+        std::process::exit(1);
+    } else {
+        println!("mdbook installed successfully.");
+    }
+}
+
 fn run_docs() {
     println!("Building and serving the developer docs...");
 
-    // Run mdbook build command
     let build_status = Command::new("mdbook")
         .arg("build")
         .arg("src/Developer-Docs")
@@ -41,7 +60,6 @@ fn run_docs() {
         std::process::exit(1);
     }
 
-    // Run mdbook serve command
     let serve_status = Command::new("mdbook")
         .arg("serve")
         .arg("src/Developer-Docs")
@@ -57,7 +75,6 @@ fn run_docs() {
 fn deploy_to_icp() {
     println!("Starting local DFX replica...");
 
-    // Run dfx start --clean --background
     let start_status = Command::new("dfx")
         .arg("start")
         .arg("--clean")
@@ -72,7 +89,6 @@ fn deploy_to_icp() {
 
     println!("Deploying to ICP...");
 
-    // Run dfx deploy command
     let deploy_status = Command::new("dfx")
         .arg("deploy")
         .status()
