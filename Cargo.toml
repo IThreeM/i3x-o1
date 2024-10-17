@@ -1,6 +1,6 @@
 [package]
 name = "i3x-o1"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Dedan Okware <softengdedan@gmail.com>"]
 description = "An internal CLI tool for building, serving, and deploying the I3M Developer Docs internally for IThreeM Company."
